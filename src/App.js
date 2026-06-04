@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const WA = "237656620793";
 const EMAIL = "ewemayi@gmail.com";
