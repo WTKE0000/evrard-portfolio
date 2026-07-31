@@ -1,25 +1,647 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Evrard Wemayi - Software Engineer & Digital Solutions for businesses in Cameroon" />
-    <meta name="theme-color" content="#050505" />
-    <title>Evrard Wemayi — Software Engineer</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Cabinet+Grotesk:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
-      body { background: #050505; color: #f0ede8; overflow-x: hidden; }
-      ::-webkit-scrollbar { width: 4px; }
-      ::-webkit-scrollbar-track { background: #050505; }
-      ::-webkit-scrollbar-thumb { background: #14e87b; border-radius: 2px; }
-      ::selection { background: #14e87b; color: #050505; }
-    </style>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Wemayi Kevin Evrard — Full Stack Software Engineer building backend APIs and web products for businesses in Cameroon." />
+<meta name="theme-color" content="#050505" />
+<title>Wemayi Kevin Evrard — Full Stack Software Engineer</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+  :root{
+    --bg:#050505;
+    --panel:#0c0e0c;
+    --panel-2:#101210;
+    --text:#f0ede8;
+    --text-dim:#8c8a84;
+    --accent:#14e87b;
+    --accent-soft:rgba(20,232,123,.10);
+    --accent-soft-2:rgba(20,232,123,.22);
+    --line:rgba(240,237,232,.09);
+    --gold:#c9a24b;
+    --sky:#5fb8e0;
+    --violet:#a78bd1;
+    --display: 'Bricolage Grotesque', sans-serif;
+    --body: 'Manrope', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--body);
+    overflow-x:hidden;
+    line-height:1.55;
+  }
+  ::-webkit-scrollbar{ width:4px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background:var(--accent); border-radius:2px; }
+  ::selection{ background:var(--accent); color:var(--bg); }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  button{ font:inherit; cursor:pointer; background:none; border:none; color:inherit; }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:3px; border-radius:2px; }
+
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:2;
+    opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{ max-width:1120px; margin:0 auto; padding:0 32px; }
+
+  /* ---------- nav ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:rgba(5,5,5,.72); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1120px; margin:0 auto; gap:16px; }
+  .logo{ font-family:var(--mono); font-size:14px; font-weight:600; letter-spacing:.02em; display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .logo .dot{ width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent); animation:pulse 2.4s ease-in-out infinite; flex-shrink:0; }
+  @keyframes pulse{ 0%,100%{opacity:1} 50%{opacity:.35} }
+
+  .tabs{ display:flex; gap:2px; font-family:var(--mono); font-size:13px; }
+  .tabs a{
+    padding:8px 14px; color:var(--text-dim); border-radius:6px 6px 0 0;
+    border:1px solid transparent; transition:color .2s ease, border-color .2s ease, background .2s ease;
+    white-space:nowrap;
+  }
+  .tabs a:hover{ color:var(--text); background:var(--panel); border-color:var(--line); }
+
+  .nav-right{ display:flex; align-items:center; gap:16px; }
+  .nav-status{ font-family:var(--mono); font-size:12px; color:var(--text-dim); display:flex; align-items:center; gap:8px; white-space:nowrap; }
+  .nav-status .dot{ width:6px; height:6px; border-radius:50%; background:var(--accent); flex-shrink:0; }
+
+  .lang-toggle{
+    display:flex; border:1px solid var(--line); border-radius:20px; overflow:hidden; font-family:var(--mono); font-size:11.5px; flex-shrink:0;
+  }
+  .lang-toggle button{ padding:6px 12px; color:var(--text-dim); transition:color .2s ease, background .2s ease; }
+  .lang-toggle button.active{ background:var(--accent); color:#04140b; font-weight:600; }
+
+  .burger{ display:none; border:1px solid var(--line); color:var(--text); width:38px; height:38px; border-radius:8px; align-items:center; justify-content:center; font-size:16px; flex-shrink:0; }
+
+  .mobile-menu{
+    display:none; position:fixed; inset:0; z-index:60; background:rgba(5,5,5,.98); backdrop-filter:blur(6px);
+    flex-direction:column; align-items:center; justify-content:center; gap:28px;
+  }
+  .mobile-menu.open{ display:flex; }
+  .mobile-menu a{ font-family:var(--display); font-size:28px; font-weight:600; }
+  .mobile-menu .close-btn{ position:absolute; top:20px; right:24px; width:42px; height:42px; border:1px solid var(--line); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:160px 0 88px; position:relative; }
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--accent); letter-spacing:.03em;
+    display:flex; align-items:center; gap:10px; margin-bottom:26px;
+  }
+  .eyebrow::before{ content:''; width:22px; height:1px; background:var(--accent); flex-shrink:0; }
+
+  h1{
+    font-family:var(--display); font-weight:600; letter-spacing:-.02em;
+    font-size:clamp(34px, 7vw, 74px); line-height:1.05; max-width:900px;
+  }
+  h1 em{ font-style:normal; color:var(--text-dim); }
+  .cursor{ display:inline-block; width:.5ch; background:var(--accent); animation:blink 1s steps(1) infinite; margin-left:2px; }
+  @keyframes blink{ 50%{ opacity:0 } }
+
+  .role-line{
+    font-family:var(--mono); font-size:15.5px; color:var(--text-dim); margin-top:24px; min-height:24px;
+  }
+  .role-line .txt{ color:var(--accent); }
+
+  .hero-sub{ max-width:520px; color:var(--text-dim); font-size:16px; margin-top:20px; }
+
+  .hero-cta{ display:flex; gap:14px; margin-top:38px; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:13.5px; padding:13px 22px; border-radius:8px;
+    display:inline-flex; align-items:center; gap:9px; transition:transform .18s ease, background .18s ease, border-color .18s ease;
+  }
+  .btn-primary{ background:var(--accent); color:#04140b; font-weight:600; }
+  .btn-primary:hover{ transform:translateY(-2px); }
+  .btn-ghost{ border:1px solid var(--line); color:var(--text); }
+  .btn-ghost:hover{ border-color:var(--accent-soft-2); background:var(--accent-soft); transform:translateY(-2px); }
+
+  .hero-meta{
+    margin-top:58px; padding-top:26px; border-top:1px solid var(--line);
+    display:flex; gap:40px; flex-wrap:wrap; font-family:var(--mono); font-size:12.5px; color:var(--text-dim);
+  }
+  .hero-meta b{ color:var(--text); font-family:var(--display); font-size:21px; font-weight:600; display:block; margin-bottom:2px; }
+
+  /* ---------- section shell ---------- */
+  section{ padding:100px 0; border-top:1px solid var(--line); }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:52px; flex-wrap:wrap; }
+  .section-head h2{ font-family:var(--display); font-size:clamp(26px,4vw,40px); font-weight:600; letter-spacing:-.01em; }
+  .section-head p{ color:var(--text-dim); max-width:360px; font-size:14.5px; }
+
+  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- work ---------- */
+  .case{
+    display:grid; grid-template-columns:1.05fr .95fr; gap:48px; align-items:center;
+    padding:40px 0; border-bottom:1px solid var(--line);
+  }
+  .case:last-child{ border-bottom:none; }
+  .case:nth-child(even){ direction:rtl; }
+  .case:nth-child(even) > *{ direction:ltr; }
+
+  .browser{
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; overflow:hidden;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7);
+  }
+  .browser-bar{ display:flex; align-items:center; gap:8px; padding:11px 14px; border-bottom:1px solid var(--line); background:var(--panel-2); }
+  .browser-bar .d{ width:9px; height:9px; border-radius:50%; background:#3a3a37; flex-shrink:0; }
+  .browser-url{
+    flex:1; margin-left:8px; font-family:var(--mono); font-size:11.5px; color:var(--text-dim);
+    background:var(--bg); border:1px solid var(--line); border-radius:5px; padding:5px 10px;
+    display:flex; align-items:center; gap:6px; overflow:hidden;
+  }
+  .browser-url i{ font-size:9px; color:var(--accent); flex-shrink:0; }
+  .browser-url span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .mock{ padding:22px; height:220px; position:relative; overflow:hidden; }
+
+  .mock-learn{ background:linear-gradient(160deg,#0a1116,#050505 65%); }
+  .mock-learn .stats{ display:flex; gap:16px; margin-top:16px; }
+  .mock-learn .stat b{ display:block; font-family:var(--display); color:var(--sky); font-size:21px; }
+  .mock-learn .stat span{ font-family:var(--mono); font-size:10px; color:var(--text-dim); }
+  .mock-learn .bars{ display:flex; align-items:flex-end; gap:8px; height:64px; margin-top:18px; }
+  .mock-learn .bars i{ flex:1; background:linear-gradient(180deg, rgba(95,184,224,.65), rgba(95,184,224,.08)); border-radius:4px 4px 0 0; }
+  .mock-learn .label{ font-family:var(--mono); font-size:10px; color:var(--sky); letter-spacing:.08em; }
+  .mock-learn h4{ font-family:var(--display); color:#dcecf4; font-size:18px; margin-top:6px; }
+
+  .mock-bank{ background:linear-gradient(160deg,#120e18,#050505 65%); }
+  .mock-bank .label{ font-family:var(--mono); font-size:10px; color:var(--violet); letter-spacing:.08em; }
+  .mock-bank h4{ font-family:var(--display); color:#e8e0f2; font-size:18px; margin-top:6px; }
+  .mock-bank .rows{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+  .mock-bank .rowline{ height:12px; border-radius:4px; background:rgba(167,139,209,.16); }
+  .mock-bank .rowline:nth-child(1){ width:92%; }
+  .mock-bank .rowline:nth-child(2){ width:70%; }
+  .mock-bank .rowline:nth-child(3){ width:80%; }
+  .mock-bank .pill{ margin-top:16px; display:inline-flex; align-items:center; gap:6px; font-family:var(--mono); font-size:11px; color:var(--violet); border:1px solid rgba(167,139,209,.3); border-radius:20px; padding:5px 12px; }
+
+  .mock-perfume{ background:radial-gradient(circle at 30% 20%, #1a1610 0%, #0a0a08 70%); }
+  .mock-perfume .row{ display:flex; gap:10px; margin-top:14px; }
+  .mock-perfume .card{
+    flex:1; height:110px; border-radius:8px; border:1px solid rgba(201,162,75,.25);
+    background:linear-gradient(160deg, rgba(201,162,75,.14), transparent 70%);
+    position:relative;
+  }
+  .mock-perfume .card::after{
+    content:''; position:absolute; left:50%; bottom:12px; transform:translateX(-50%);
+    width:20px; height:34px; border-radius:3px 3px 8px 8px; background:linear-gradient(180deg,#c9a24b,#5a4520);
+  }
+  .mock-perfume .label{ font-family:var(--mono); font-size:10px; color:var(--gold); letter-spacing:.08em; }
+  .mock-perfume h4{ font-family:var(--display); color:#e8dcc0; font-size:18px; margin-top:6px; }
+
+  .case-body .index{ font-family:var(--mono); font-size:12px; color:var(--accent); margin-bottom:10px; display:block; }
+  .case-body h3{ font-family:var(--display); font-size:28px; font-weight:600; margin-bottom:14px; letter-spacing:-.01em; }
+  .case-body p{ color:var(--text-dim); font-size:15px; max-width:440px; }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:20px; }
+  .tag{ font-family:var(--mono); font-size:11.5px; padding:5px 10px; border:1px solid var(--line); border-radius:20px; color:var(--text-dim); }
+  .case-link{ margin-top:24px; display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:13.5px; color:var(--accent); }
+  .case-link i{ transition:transform .2s ease; }
+  .case-link:hover i{ transform:translate(3px,-3px); }
+
+  .also-shipped{ margin-top:36px; padding-top:28px; border-top:1px dashed var(--line); display:flex; align-items:center; gap:16px; flex-wrap:wrap; font-size:14px; color:var(--text-dim); }
+  .also-shipped b{ color:var(--text); font-family:var(--mono); font-size:12px; letter-spacing:.04em; }
+
+  /* ---------- toolkit ---------- */
+  .toolgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
+  .toolcol{ background:var(--panel); padding:30px; }
+  .toolcol h4{ font-family:var(--mono); font-size:12px; color:var(--text-dim); letter-spacing:.06em; margin-bottom:20px; text-transform:uppercase; }
+  .toolcol ul{ display:flex; flex-direction:column; gap:16px; }
+  .toolcol li{ display:flex; align-items:center; gap:12px; font-size:14.5px; }
+  .toolcol li i{ width:20px; text-align:center; color:var(--accent); font-size:16px; flex-shrink:0; }
+
+  /* ---------- about strip ---------- */
+  .about{ display:grid; grid-template-columns:.9fr 1.1fr; gap:52px; align-items:start; }
+  .about-photo{
+    aspect-ratio:4/5; border-radius:12px; border:1px solid var(--line);
+    background:
+      radial-gradient(circle at 30% 20%, var(--accent-soft), transparent 55%),
+      repeating-linear-gradient(135deg, rgba(240,237,232,.03) 0 2px, transparent 2px 14px),
+      var(--panel);
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+  }
+  .about-photo i{ font-size:60px; color:var(--accent); opacity:.8; }
+  .about-photo .tag{ position:absolute; bottom:16px; left:16px; }
+  .about p{ color:var(--text-dim); font-size:16px; margin-bottom:16px; max-width:480px; }
+  .about p b{ color:var(--text); font-weight:600; }
+  .about-facts{ display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:26px; }
+  .about-facts div{ border:1px solid var(--line); border-radius:10px; padding:15px; }
+  .about-facts span{ font-family:var(--mono); font-size:10.5px; color:var(--text-dim); display:block; margin-bottom:6px; }
+  .about-facts strong{ font-family:var(--display); font-size:15px; font-weight:600; }
+
+  /* ---------- contact ---------- */
+  .contact{ text-align:left; }
+  .contact h2{ font-family:var(--display); font-size:clamp(30px,6vw,58px); font-weight:600; letter-spacing:-.02em; max-width:760px; }
+  .contact-links{ display:flex; flex-direction:column; gap:12px; margin-top:32px; }
+  .contact-link-row{
+    display:inline-flex; align-items:center; gap:14px; font-family:var(--mono); width:fit-content;
+    font-size:clamp(16px,2.6vw,22px); color:var(--accent); border-bottom:1px solid var(--accent-soft-2); padding-bottom:8px;
+  }
+  .contact-link-row i{ font-size:18px; flex-shrink:0; }
+  .social-row{ display:flex; gap:14px; margin-top:40px; flex-wrap:wrap; }
+  .social-row a{
+    width:46px; height:46px; border:1px solid var(--line); border-radius:10px;
+    display:flex; align-items:center; justify-content:center; font-size:17px; color:var(--text-dim);
+    transition:color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .social-row a:hover{ color:var(--accent); border-color:var(--accent-soft-2); transform:translateY(-3px); }
+
+  footer{ border-top:1px solid var(--line); padding:26px 0; }
+  .foot-row{ display:flex; justify-content:space-between; align-items:center; font-family:var(--mono); font-size:12px; color:var(--text-dim); flex-wrap:wrap; gap:12px; }
+  .foot-row a:hover{ color:var(--accent); }
+
+  @media (max-width:900px){
+    .tabs{ display:none; }
+    .nav-status{ display:none; }
+    .burger{ display:flex; }
+    .case, .case:nth-child(even){ grid-template-columns:1fr; direction:ltr; }
+    .about{ grid-template-columns:1fr; }
+    .toolgrid{ grid-template-columns:1fr; }
+    .about-photo{ aspect-ratio:16/9; }
+  }
+  @media (max-width:640px){
+    .wrap{ padding:0 20px; }
+    .nav{ padding:14px 20px; }
+    .hero{ padding:132px 0 64px; }
+    .hero-meta{ gap:24px; }
+    section{ padding:70px 0; }
+    .hero-cta{ flex-direction:column; align-items:stretch; }
+    .btn{ justify-content:center; }
+    .mock{ height:auto; min-height:190px; }
+    .mock-learn .stats{ flex-wrap:wrap; row-gap:10px; }
+  }
+  @media (max-width:400px){
+    .lang-toggle button{ padding:6px 9px; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; }
+    .reveal{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="nav wrap">
+    <div class="logo"><span class="dot"></span> evrard.dev</div>
+    <nav class="tabs">
+      <a href="#work" data-i18n="nav.work">work.js</a>
+      <a href="#toolkit" data-i18n="nav.toolkit">toolkit.json</a>
+      <a href="#about" data-i18n="nav.about">about.md</a>
+      <a href="#contact" data-i18n="nav.contact">contact.sh</a>
+    </nav>
+    <div class="nav-right">
+      <div class="nav-status"><span class="dot"></span> <span data-i18n="nav.status">open to new projects</span></div>
+      <div class="lang-toggle">
+        <button id="lang-en" class="active" onclick="setLang('en')">EN</button>
+        <button id="lang-fr" onclick="setLang('fr')">FR</button>
+      </div>
+      <button class="burger" id="burger-open" aria-label="menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu">
+  <button class="close-btn" id="burger-close" aria-label="close menu"><i class="fa-solid fa-xmark"></i></button>
+  <a href="#work" data-i18n="nav.work" data-close>work.js</a>
+  <a href="#toolkit" data-i18n="nav.toolkit" data-close>toolkit.json</a>
+  <a href="#about" data-i18n="nav.about" data-close>about.md</a>
+  <a href="#contact" data-i18n="nav.contact" data-close>contact.sh</a>
+</div>
+
+<main>
+  <section class="hero wrap" style="border-top:none;">
+    <p class="eyebrow">~/wemayi-kevin-evrard</p>
+    <h1 data-i18n-html="hero.h1">Full-stack software engineer,<br><em>building products that ship.</em><span class="cursor">&nbsp;</span></h1>
+    <p class="role-line"><span class="txt" id="typed"></span></p>
+    <p class="hero-sub" data-i18n="hero.sub">Software Engineer at ZezeHealth, building backend APIs and web products for businesses across Cameroon — from database schema to production deploy.</p>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary"><i class="fa-solid fa-arrow-down"></i> <span data-i18n="hero.cta1">View selected work</span></a>
+      <a href="#contact" class="btn btn-ghost"><i class="fa-regular fa-envelope"></i> <span data-i18n="hero.cta2">Get in touch</span></a>
+    </div>
+    <div class="hero-meta">
+      <div><b>2+</b><span data-i18n="hero.meta1">years in production</span></div>
+      <div><b>1,000+</b><span data-i18n="hero.meta2">daily users on ZezeLearn</span></div>
+      <div><b data-i18n="hero.meta3strong">Yaoundé</b><span data-i18n="hero.meta3">based, open to relocation</span></div>
+    </div>
+  </section>
+
+  <section id="work" class="wrap">
+    <div class="section-head reveal">
+      <h2 data-i18n="work.title">Selected work</h2>
+      <p data-i18n="work.sub">Production systems and client platforms, built from database schema to deploy.</p>
+    </div>
+
+    <div class="case reveal">
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+          <div class="browser-url"><i class="fa-solid fa-lock"></i> <span>zezelearn.com</span></div>
+        </div>
+        <div class="mock mock-learn">
+          <span class="label">ZEZELEARN</span>
+          <h4 data-i18n="work.zeze.mock">E-learning platform</h4>
+          <div class="stats">
+            <div class="stat"><b>1K+</b><span data-i18n="work.zeze.stat1">daily users</span></div>
+            <div class="stat"><b>8+</b><span data-i18n="work.zeze.stat2">API endpoints</span></div>
+            <div class="stat"><b>-40%</b><span data-i18n="work.zeze.stat3">load time</span></div>
+          </div>
+          <div class="bars"><i style="height:40%"></i><i style="height:70%"></i><i style="height:55%"></i><i style="height:90%"></i><i style="height:60%"></i><i style="height:75%"></i></div>
+        </div>
+      </div>
+      <div class="case-body">
+        <span class="index" data-i18n="work.zeze.index">01 — Ed-tech · Current role</span>
+        <h3>ZezeLearn</h3>
+        <p data-i18n="work.zeze.body">ZezeHealth's flagship e-learning platform, serving 1,000+ daily active users. I own backend architecture and REST API design (Django + FastAPI), and optimized database queries to cut load times by 40%.</p>
+        <div class="tags">
+          <span class="tag">Django</span><span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">PostgreSQL</span><span class="tag">Docker</span>
+        </div>
+        <a class="case-link" href="https://zezelearn.com" target="_blank" rel="noopener"><span data-i18n="work.visit">Visit live site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+          <div class="browser-url"><i class="fa-solid fa-lock"></i> <span data-i18n="work.cca.url">internal — CCA Bank</span></div>
+        </div>
+        <div class="mock mock-bank">
+          <span class="label" data-i18n="work.cca.label">CCA BANK</span>
+          <h4 data-i18n="work.cca.mock">Employee training platform</h4>
+          <div class="rows"><div class="rowline"></div><div class="rowline"></div><div class="rowline"></div></div>
+          <div class="pill"><i class="fa-solid fa-circle-check"></i> <span data-i18n="work.cca.pill">150+ employees onboarded</span></div>
+        </div>
+      </div>
+      <div class="case-body">
+        <span class="index" data-i18n="work.cca.index">02 — Fintech · Independent project</span>
+        <h3 data-i18n="work.cca.title">CCA Bank Training Platform</h3>
+        <p data-i18n="work.cca.body">An internal onboarding and training platform built solo, end to end — UI/UX design, backend API, database design and deployment. Onboarded 150+ employees at 99% uptime.</p>
+        <div class="tags">
+          <span class="tag">FastAPI</span><span class="tag">React</span><span class="tag">MongoDB</span><span class="tag">Docker</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="browser">
+        <div class="browser-bar">
+          <span class="d"></span><span class="d"></span><span class="d"></span>
+          <div class="browser-url"><i class="fa-solid fa-lock"></i> <span>ws-fragrances.vercel.app</span></div>
+        </div>
+        <div class="mock mock-perfume">
+          <span class="label">W&amp;S FRAGRANCES</span>
+          <h4 data-i18n="work.ws.mock">Perfume storefront</h4>
+          <div class="row">
+            <div class="card"></div><div class="card"></div><div class="card"></div>
+          </div>
+        </div>
+      </div>
+      <div class="case-body">
+        <span class="index" data-i18n="work.ws.index">03 — Ecommerce · Freelance</span>
+        <h3>W&amp;S Fragrances</h3>
+        <p data-i18n="work.ws.body">A storefront for Middle Eastern and French perfume brands sold in Cameroon, designed for browsing by scent and closing sales through WhatsApp. Owned the full cycle, from client brief to production.</p>
+        <div class="tags">
+          <span class="tag">Next.js</span><span class="tag">React</span><span class="tag">Vercel</span>
+        </div>
+        <a class="case-link" href="https://ws-fragrances.vercel.app" target="_blank" rel="noopener"><span data-i18n="work.visit">Visit live site</span> <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </div>
+
+    <div class="also-shipped reveal">
+      <b data-i18n="work.also.label">ALSO SHIPPED</b>
+      <span data-i18n="work.also.body">ZezeHealth's public corporate website — designed and deployed solo, 50,000+ annual visitors.</span>
+    </div>
+  </section>
+
+  <section id="toolkit" class="wrap">
+    <div class="section-head reveal">
+      <h2 data-i18n="tool.title">Toolkit</h2>
+      <p data-i18n="tool.sub">The stack I use to take a project from requirements to production.</p>
+    </div>
+    <div class="toolgrid reveal">
+      <div class="toolcol">
+        <h4 data-i18n="tool.col1">Frontend</h4>
+        <ul>
+          <li><i class="fa-brands fa-react"></i> React</li>
+          <li><i class="fa-brands fa-js"></i> JavaScript (ES6+)</li>
+          <li><i class="fa-brands fa-html5"></i> HTML5</li>
+          <li><i class="fa-brands fa-css3-alt"></i> CSS3 / Tailwind</li>
+        </ul>
+      </div>
+      <div class="toolcol">
+        <h4 data-i18n="tool.col2">Backend</h4>
+        <ul>
+          <li><i class="fa-brands fa-python"></i> Python</li>
+          <li><i class="fa-solid fa-layer-group"></i> Django &amp; FastAPI</li>
+          <li><i class="fa-brands fa-node-js"></i> Node.js</li>
+          <li><i class="fa-solid fa-plug"></i> REST API design</li>
+        </ul>
+      </div>
+      <div class="toolcol">
+        <h4 data-i18n="tool.col3">Data &amp; DevOps</h4>
+        <ul>
+          <li><i class="fa-solid fa-database"></i> PostgreSQL / MySQL</li>
+          <li><i class="fa-solid fa-leaf"></i> MongoDB</li>
+          <li><i class="fa-brands fa-docker"></i> Docker</li>
+          <li><i class="fa-brands fa-git-alt"></i> Git / CI-CD</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="wrap">
+    <div class="about">
+      <div class="about-photo reveal">
+        <i class="fa-solid fa-code"></i>
+        <span class="tag">Yaoundé, Cameroon</span>
+      </div>
+      <div class="reveal">
+        <p class="eyebrow" style="margin-bottom:20px;">02 — about</p>
+        <p data-i18n="about.p1"><b>I'm Kevin</b> — a full stack software engineer at ZezeHealth in Yaoundé, working on production backend systems and the interfaces built on top of them.</p>
+        <p data-i18n="about.p2">I care about clean API design and code that holds up in production, as much as about the interface a user actually touches — I've taken projects solo from requirements gathering through to deployment and mentoring the developers who maintain them after.</p>
+        <p data-i18n="about.p3">Trained as a software engineer at the Africa Institute of Computer Science, bilingual French/English, and open to relocating for the right opportunity.</p>
+        <div class="about-facts">
+          <div><span data-i18n="about.f1label">ROLE</span><strong data-i18n="about.f1val">Software Engineer, ZezeHealth</strong></div>
+          <div><span data-i18n="about.f2label">BASED IN</span><strong>Yaoundé, Cameroon</strong></div>
+          <div><span data-i18n="about.f3label">STACK</span><strong>Python · React · PostgreSQL</strong></div>
+          <div><span data-i18n="about.f4label">AVAILABILITY</span><strong data-i18n="about.f4val">Open to relocation</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="wrap contact">
+    <p class="eyebrow reveal">03 — contact</p>
+    <h2 class="reveal" data-i18n-html="contact.h2">Have a product to build?<br>Let's talk about it.</h2>
+    <div class="contact-links reveal">
+      <a class="contact-link-row" href="mailto:ewemayi@gmail.com"><i class="fa-regular fa-envelope"></i> ewemayi@gmail.com</a>
+      <a class="contact-link-row" href="tel:+237656620793"><i class="fa-solid fa-phone"></i> +237 656 620 793</a>
+    </div>
+    <div class="social-row reveal">
+      <a href="https://wa.me/237656620793" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="https://github.com/WTKE0000" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a href="https://linkedin.com/in/wemayi-evrard" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div class="foot-row">
+    <span data-i18n="footer.text">© 2026 Wemayi Kevin Evrard. Built from scratch.</span>
+    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" data-i18n="footer.top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  const translations = {
+    en: {
+      "nav.work":"work.js", "nav.toolkit":"toolkit.json", "nav.about":"about.md", "nav.contact":"contact.sh",
+      "nav.status":"open to new projects",
+      "hero.h1":"Full-stack software engineer,<br><em>building products that ship.</em><span class=\"cursor\">&nbsp;</span>",
+      "hero.sub":"Software Engineer at ZezeHealth, building backend APIs and web products for businesses across Cameroon — from database schema to production deploy.",
+      "hero.cta1":"View selected work", "hero.cta2":"Get in touch",
+      "hero.meta1":"years in production", "hero.meta2":"daily users on ZezeLearn",
+      "hero.meta3strong":"Yaoundé", "hero.meta3":"based, open to relocation",
+      "work.title":"Selected work", "work.sub":"Production systems and client platforms, built from database schema to deploy.",
+      "work.visit":"Visit live site",
+      "work.zeze.index":"01 — Ed-tech · Current role", "work.zeze.mock":"E-learning platform",
+      "work.zeze.stat1":"daily users", "work.zeze.stat2":"API endpoints", "work.zeze.stat3":"load time",
+      "work.zeze.body":"ZezeHealth's flagship e-learning platform, serving 1,000+ daily active users. I own backend architecture and REST API design (Django + FastAPI), and optimized database queries to cut load times by 40%.",
+      "work.cca.url":"internal — CCA Bank", "work.cca.label":"CCA BANK", "work.cca.mock":"Employee training platform",
+      "work.cca.pill":"150+ employees onboarded",
+      "work.cca.index":"02 — Fintech · Independent project", "work.cca.title":"CCA Bank Training Platform",
+      "work.cca.body":"An internal onboarding and training platform built solo, end to end — UI/UX design, backend API, database design and deployment. Onboarded 150+ employees at 99% uptime.",
+      "work.ws.mock":"Perfume storefront", "work.ws.index":"03 — Ecommerce · Freelance",
+      "work.ws.body":"A storefront for Middle Eastern and French perfume brands sold in Cameroon, designed for browsing by scent and closing sales through WhatsApp. Owned the full cycle, from client brief to production.",
+      "work.also.label":"ALSO SHIPPED",
+      "work.also.body":"ZezeHealth's public corporate website — designed and deployed solo, 50,000+ annual visitors.",
+      "tool.title":"Toolkit", "tool.sub":"The stack I use to take a project from requirements to production.",
+      "tool.col1":"Frontend", "tool.col2":"Backend", "tool.col3":"Data & DevOps",
+      "about.p1":"<b>I'm Kevin</b> — a full stack software engineer at ZezeHealth in Yaoundé, working on production backend systems and the interfaces built on top of them.",
+      "about.p2":"I care about clean API design and code that holds up in production, as much as about the interface a user actually touches — I've taken projects solo from requirements gathering through to deployment and mentoring the developers who maintain them after.",
+      "about.p3":"Trained as a software engineer at the Africa Institute of Computer Science, bilingual French/English, and open to relocating for the right opportunity.",
+      "about.f1label":"ROLE", "about.f1val":"Software Engineer, ZezeHealth",
+      "about.f2label":"BASED IN", "about.f3label":"STACK",
+      "about.f4label":"AVAILABILITY", "about.f4val":"Open to relocation",
+      "contact.h2":"Have a product to build?<br>Let's talk about it.",
+      "footer.text":"© 2026 Wemayi Kevin Evrard. Built from scratch.", "footer.top":"Back to top ↑"
+    },
+    fr: {
+      "nav.work":"travaux.js", "nav.toolkit":"outils.json", "nav.about":"apropos.md", "nav.contact":"contact.sh",
+      "nav.status":"ouvert aux projets",
+      "hero.h1":"Ingénieur logiciel full-stack,<br><em>je livre des produits en production.</em><span class=\"cursor\">&nbsp;</span>",
+      "hero.sub":"Software Engineer chez ZezeHealth, je construis des APIs backend et des produits web pour des entreprises au Cameroun — du schéma de base de données au déploiement en production.",
+      "hero.cta1":"Voir mes projets", "hero.cta2":"Me contacter",
+      "hero.meta1":"ans en production", "hero.meta2":"utilisateurs quotidiens sur ZezeLearn",
+      "hero.meta3strong":"Yaoundé", "hero.meta3":"basé, ouvert à la relocalisation",
+      "work.title":"Projets sélectionnés", "work.sub":"Systèmes en production et plateformes clients, du schéma de données au déploiement.",
+      "work.visit":"Voir le site",
+      "work.zeze.index":"01 — E-learning · Poste actuel", "work.zeze.mock":"Plateforme e-learning",
+      "work.zeze.stat1":"utilisateurs/jour", "work.zeze.stat2":"endpoints API", "work.zeze.stat3":"temps de chargement",
+      "work.zeze.body":"Plateforme e-learning phare de ZezeHealth, avec 1 000+ utilisateurs actifs quotidiens. Je gère l'architecture backend et la conception des APIs REST (Django + FastAPI), et j'ai optimisé les requêtes pour réduire le temps de chargement de 40%.",
+      "work.cca.url":"interne — CCA Bank", "work.cca.label":"CCA BANK", "work.cca.mock":"Plateforme de formation interne",
+      "work.cca.pill":"150+ employés onboardés",
+      "work.cca.index":"02 — Fintech · Projet indépendant", "work.cca.title":"Plateforme de formation CCA Bank",
+      "work.cca.body":"Plateforme d'onboarding et de formation interne développée en solo, de bout en bout — design UI/UX, API backend, base de données et déploiement. 150+ employés onboardés, 99% de disponibilité.",
+      "work.ws.mock":"Vitrine de parfums", "work.ws.index":"03 — E-commerce · Freelance",
+      "work.ws.body":"Site vitrine pour des marques de parfums du Moyen-Orient et françaises vendues au Cameroun, pensé pour la navigation par senteur et la vente via WhatsApp. Cycle complet géré, du brief client à la mise en production.",
+      "work.also.label":"AUSSI RÉALISÉ",
+      "work.also.body":"Site corporate public de ZezeHealth — conçu et déployé en solo, 50 000+ visiteurs annuels.",
+      "tool.title":"Outils", "tool.sub":"La stack que j'utilise pour livrer un projet, des besoins à la production.",
+      "tool.col1":"Frontend", "tool.col2":"Backend", "tool.col3":"Données & DevOps",
+      "about.p1":"<b>Je suis Kevin</b> — ingénieur logiciel full stack chez ZezeHealth à Yaoundé, je travaille sur des systèmes backend en production et les interfaces construites par-dessus.",
+      "about.p2":"Je porte autant d'attention à la conception d'API propres et au code qui tient en production qu'à l'interface que l'utilisateur touche réellement — j'ai mené des projets en solo, du recueil des besoins jusqu'au déploiement, en encadrant ensuite les développeurs qui les maintiennent.",
+      "about.p3":"Formé en ingénierie logicielle à l'Africa Institute of Computer Science, bilingue français/anglais, ouvert à la relocalisation pour la bonne opportunité.",
+      "about.f1label":"POSTE", "about.f1val":"Software Engineer, ZezeHealth",
+      "about.f2label":"BASÉ À", "about.f3label":"STACK",
+      "about.f4label":"DISPONIBILITÉ", "about.f4val":"Ouvert à la relocalisation",
+      "contact.h2":"Un produit à construire ?<br>Discutons-en.",
+      "footer.text":"© 2026 Wemayi Kevin Evrard. Codé de zéro.", "footer.top":"Retour en haut ↑"
+    }
+  };
+
+  const rolePhrases = {
+    en: ["REST APIs.", "React interfaces.", "Production systems.", "E-learning platforms."],
+    fr: ["APIs REST.", "Interfaces React.", "Systèmes en production.", "Plateformes e-learning."]
+  };
+
+  let currentLang = 'en';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function applyTranslations(lang){
+    const dict = translations[lang];
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if(dict[key] === undefined) return;
+      if(el.querySelector('b')){ el.innerHTML = dict[key]; }
+      else { el.textContent = dict[key]; }
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+      const key = el.getAttribute('data-i18n-html');
+      if(dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+    document.documentElement.lang = lang;
+  }
+
+  function setLang(lang){
+    currentLang = lang;
+    applyTranslations(lang);
+    document.getElementById('lang-en').classList.toggle('active', lang==='en');
+    document.getElementById('lang-fr').classList.toggle('active', lang==='fr');
+    restartTyping();
+  }
+
+  // typing rotator
+  const el = document.getElementById('typed');
+  let typingTimer = null;
+  function restartTyping(){
+    clearTimeout(typingTimer);
+    const phrases = rolePhrases[currentLang];
+    if (reduceMotion) { el.textContent = phrases[0]; return; }
+    let pi = 0, ci = 0, deleting = false;
+    function tick(){
+      const word = phrases[pi];
+      if(!deleting){
+        ci++;
+        el.textContent = word.slice(0, ci);
+        if(ci === word.length){ deleting = true; typingTimer = setTimeout(tick, 1400); return; }
+      } else {
+        ci--;
+        el.textContent = word.slice(0, ci);
+        if(ci === 0){ deleting = false; pi = (pi+1) % phrases.length; }
+      }
+      typingTimer = setTimeout(tick, deleting ? 35 : 55);
+    }
+    tick();
+  }
+  restartTyping();
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold:.15 });
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // mobile menu
+  const menu = document.getElementById('mobile-menu');
+  document.getElementById('burger-open').addEventListener('click', ()=> menu.classList.add('open'));
+  document.getElementById('burger-close').addEventListener('click', ()=> menu.classList.remove('open'));
+  menu.querySelectorAll('[data-close]').forEach(a=> a.addEventListener('click', ()=> menu.classList.remove('open')));
+</script>
+</body>
 </html>
